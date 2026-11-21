@@ -1,0 +1,3 @@
+<resources>
+    <style name="Theme.TermOSPro" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
