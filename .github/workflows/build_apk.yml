@@ -19,13 +19,14 @@ jobs:
           java-version: '17'
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v2
 
       - name: Accept Android SDK Licenses
-        run: yes | sdkmanager --licenses || true
+        run: |
+          yes | sdkmanager --licenses || true
 
       - name: Grant execute permission for gradlew
-        run: chmod +x gradlew || gradle wrapper
+        run: chmod +x gradlew
 
       - name: Build APK with Gradle
         run: ./gradlew assembleDebug --stacktrace --no-daemon
