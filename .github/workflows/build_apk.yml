@@ -18,10 +18,8 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Build with Gradle
         run: |
+          export ANDROID_SDK_ROOT=$ANDROID_HOME
           chmod +x gradlew
           ./gradlew assembleDebug --stacktrace --no-daemon
