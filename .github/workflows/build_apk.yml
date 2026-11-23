@@ -18,17 +18,23 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.4'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Accept Android SDK Licenses
+        run: |
+          SDK_MANAGER=$(find "$ANDROID_HOME" -name "sdkmanager" 2>/dev/null | head -n 1)
+          if [ -n "$SDK_MANAGER" ]; then
+            yes | "$SDK_MANAGER" --licenses > /dev/null 2>&1 || true
+          fi
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug --stacktrace --no-daemon
+        run: gradle assembleDebug --stacktrace --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug
+          name: termos-pro-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
